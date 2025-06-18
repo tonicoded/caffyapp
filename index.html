@@ -5,13 +5,15 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Caffy ☕</title>
 
-  <!-- Fonts & Lottie -->
+  <!-- Fonts & Libs -->
   <link href="https://fonts.googleapis.com/css2?family=Bree+Serif&family=Outfit:wght@400;600;800&display=swap" rel="stylesheet">
   <script src="https://cdnjs.cloudflare.com/ajax/libs/lottie-web/5.12.0/lottie.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
 
   <style>
     :root {
-      --bg: #fff8f3;
+      --bg1: #fff8f3;
+      --bg2: #fcefe7;
       --text: #3e2b1f;
       --accent: #a47148;
     }
@@ -23,12 +25,21 @@
     }
 
     html, body {
-      background-color: var(--bg);
+      min-height: 100%;
+      background: linear-gradient(270deg, var(--bg1), var(--bg2), var(--bg1));
+      background-size: 600% 600%;
+      animation: bgShift 16s ease infinite;
       color: var(--text);
       font-family: 'Outfit', sans-serif;
       text-align: center;
       padding: 40px 20px;
       overflow-x: hidden;
+    }
+
+    @keyframes bgShift {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
     }
 
     #lottieLogo {
@@ -40,31 +51,52 @@
     h1 {
       font-family: 'Bree Serif', serif;
       font-size: 48px;
-      margin-bottom: 14px;
+      margin-bottom: 10px;
     }
 
     p.subtitle {
       font-size: 18px;
       max-width: 680px;
-      margin: 0 auto 40px;
+      margin: 0 auto 30px;
       opacity: 0.9;
       line-height: 1.5;
+    }
+
+    .live-stats {
+      font-size: 22px;
+      font-weight: 600;
+      color: var(--accent);
+      margin-bottom: 40px;
+      animation: pulse 2s infinite;
+    }
+
+    @keyframes pulse {
+      0%, 100% { transform: scale(1); opacity: 1; }
+      50% { transform: scale(1.05); opacity: 0.8; }
     }
 
     .phone-preview {
       max-width: 380px;
       width: 100%;
       margin: 0 auto 40px;
+      position: relative;
     }
 
     .phone-preview img {
       width: 100%;
       border-radius: 30px;
-      transition: transform 0.3s ease;
+      opacity: 0;
+      transform: scale(0.95);
+      transition: opacity 0.4s ease, transform 0.4s ease;
+      position: absolute;
+      top: 0;
+      left: 0;
     }
 
-    .phone-preview img:hover {
-      transform: scale(1.02);
+    .phone-preview img.active {
+      opacity: 1;
+      transform: scale(1);
+      position: relative;
     }
 
     .store-buttons {
@@ -72,7 +104,7 @@
       justify-content: center;
       gap: 20px;
       flex-wrap: wrap;
-      margin-bottom: 60px;
+      margin: 60px 0;
     }
 
     .store-buttons img {
@@ -96,15 +128,16 @@
     }
 
     .feature {
-      flex: 1 1 250px;
+      flex: 1 1 260px;
       background: #f2e4da;
       padding: 30px 20px;
       border-radius: 20px;
-      transition: transform 0.3s ease;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
     }
 
     .feature:hover {
       transform: translateY(-6px);
+      box-shadow: 0 10px 20px rgba(0,0,0,0.1);
     }
 
     .feature h3 {
@@ -143,17 +176,22 @@
   <div id="lottieLogo"></div>
 
   <h1>Caffy</h1>
-  <p class="subtitle">The dopamine-driven caffeine tracker ☕<br> Track your coffee. Explore the map. Own your vibe.</p>
+  <p class="subtitle">The dopamine-driven caffeine tracker ☕<br>Track your coffee. Explore the map. Own your vibe.</p>
+  <div class="live-stats" id="liveStats">Total mg today: 0</div>
 
   <!-- Preview carousel -->
-  <div class="phone-preview">
-    <img id="previewImage" src="preview1.png" alt="Caffy App Preview">
+  <div class="phone-preview" id="previewContainer">
+    <img src="preview1.png" class="active" alt="Preview">
+    <img src="preview2.png" alt="Preview">
+    <img src="preview3.png" alt="Preview">
+    <img src="preview4.png" alt="Preview">
+    <img src="preview5.png" alt="Preview">
   </div>
 
   <!-- Store buttons -->
   <div class="store-buttons">
-    <img src="https://developer.apple.com/assets/elements/badges/download-on-the-app-store.svg" alt="Download on App Store">
-    <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/7/78/Google_Play_Store_badge_EN.svg/512px-Google_Play_Store_badge_EN.svg.png" alt="Get it on Google Play">
+    <img src="https://developer.apple.com/assets/elements/badges/download-on-the-app-store.svg" alt="App Store">
+    <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/7/78/Google_Play_Store_badge_EN.svg/512px-Google_Play_Store_badge_EN.svg.png" alt="Google Play">
   </div>
 
   <!-- Features -->
@@ -182,28 +220,42 @@
 
   <!-- JS -->
   <script>
-    // Load Lottie logo
+    // Lottie
     lottie.loadAnimation({
       container: document.getElementById('lottieLogo'),
       renderer: 'svg',
       loop: true,
       autoplay: true,
-      path: 'logo.json' // keep this in root
+      path: 'logo.json'
     });
 
-    // Carousel preview logic
-    const images = ['preview1.png', 'preview2.png', 'preview3.png', 'preview4.png', 'preview5.png'];
-    let index = 0;
-    const img = document.getElementById('previewImage');
+    // Live stats counter
+    let caffeine = 0;
+    const statsEl = document.getElementById('liveStats');
+    const target = 8421;
+    const interval = setInterval(() => {
+      caffeine += Math.ceil((target - caffeine) / 15);
+      statsEl.textContent = 'Total mg today: ' + caffeine.toLocaleString();
+      if (caffeine >= target) clearInterval(interval);
+    }, 60);
+
+    // Preview carousel
+    const previews = document.querySelectorAll('.phone-preview img');
+    let activeIndex = 0;
 
     setInterval(() => {
-      index = (index + 1) % images.length;
-      img.style.opacity = 0;
-      setTimeout(() => {
-        img.src = images[index];
-        img.style.opacity = 1;
-      }, 200);
-    }, 3500);
+      previews[activeIndex].classList.remove('active');
+      activeIndex = (activeIndex + 1) % previews.length;
+      previews[activeIndex].classList.add('active');
+
+      // 🎉 Confetti
+      confetti({
+        particleCount: 40,
+        spread: 60,
+        origin: { y: 0.3 },
+        scalar: 0.8
+      });
+    }, 4000);
   </script>
 </body>
 </html>
