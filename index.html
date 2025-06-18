@@ -62,13 +62,7 @@
       line-height: 1.5;
     }
 
-    .live-stats {
-      font-size: 22px;
-      font-weight: 600;
-      color: var(--accent);
-      margin-bottom: 40px;
-      animation: pulse 2s infinite;
-    }
+  
 
     @keyframes pulse {
       0%, 100% { transform: scale(1); opacity: 1; }
@@ -154,26 +148,7 @@
       opacity: 0.85;
     }
 
-    .live-logs {
-      position: fixed;
-      top: 20px;
-      right: 20px;
-      display: flex;
-      flex-direction: column;
-      gap: 10px;
-      z-index: 999;
-    }
 
-    .live-log {
-      background: #fff;
-      border-left: 4px solid var(--accent);
-      padding: 10px 14px;
-      border-radius: 8px;
-      font-size: 14px;
-      color: #4e3728;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-      animation: fadeInOut 5s ease forwards;
-    }
 
     @keyframes fadeInOut {
       0% { opacity: 0; transform: translateY(-10px); }
@@ -242,15 +217,7 @@
       path: 'logo.json'
     });
 
-    // Live stats counter
-    let caffeine = 0;
-    const statsEl = document.getElementById('liveStats');
-    const target = 8421;
-    const interval = setInterval(() => {
-      caffeine += Math.ceil((target - caffeine) / 15);
-      statsEl.textContent = 'Total mg today: ' + caffeine.toLocaleString();
-      if (caffeine >= target) clearInterval(interval);
-    }, 60);
+
 
     // Preview carousel
     const previews = document.querySelectorAll('.phone-preview img');
