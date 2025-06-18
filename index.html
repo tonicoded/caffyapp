@@ -118,38 +118,67 @@
     }
 
     .features {
-      display: flex;
-      flex-wrap: wrap;
-      justify-content: center;
-      gap: 40px;
-      max-width: 900px;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 30px;
+      max-width: 1000px;
       margin: 60px auto;
       padding: 0 10px;
     }
 
     .feature {
-      flex: 1 1 260px;
       background: #f2e4da;
-      padding: 30px 20px;
+      padding: 30px;
       border-radius: 20px;
+      box-shadow: 0 10px 20px rgba(0,0,0,0.05);
       transition: transform 0.3s ease, box-shadow 0.3s ease;
     }
 
     .feature:hover {
       transform: translateY(-6px);
-      box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+      box-shadow: 0 12px 24px rgba(0,0,0,0.1);
+    }
+
+    .feature-icon {
+      font-size: 36px;
+      margin-bottom: 10px;
     }
 
     .feature h3 {
-      font-size: 20px;
-      margin-top: 12px;
-      font-weight: 600;
+      font-size: 22px;
+      margin-bottom: 10px;
     }
 
     .feature p {
       font-size: 15px;
-      margin-top: 8px;
       opacity: 0.85;
+    }
+
+    .live-logs {
+      position: fixed;
+      top: 20px;
+      right: 20px;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      z-index: 999;
+    }
+
+    .live-log {
+      background: #fff;
+      border-left: 4px solid var(--accent);
+      padding: 10px 14px;
+      border-radius: 8px;
+      font-size: 14px;
+      color: #4e3728;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+      animation: fadeInOut 5s ease forwards;
+    }
+
+    @keyframes fadeInOut {
+      0% { opacity: 0; transform: translateY(-10px); }
+      10%, 90% { opacity: 1; transform: translateY(0); }
+      100% { opacity: 0; transform: translateY(10px); }
     }
 
     footer {
@@ -172,9 +201,11 @@
 </head>
 
 <body>
+  <!-- Floating live logs -->
+  <div class="live-logs" id="liveLogs"></div>
+
   <!-- Hero -->
   <div id="lottieLogo"></div>
-
   <h1>Caffy</h1>
   <p class="subtitle">The dopamine-driven caffeine tracker ☕<br>Track your coffee. Explore the map. Own your vibe.</p>
   <div class="live-stats" id="liveStats">Total mg today: 0</div>
@@ -197,19 +228,24 @@
   <!-- Features -->
   <div class="features">
     <div class="feature">
-      <div style="font-size: 32px;">📈</div>
-      <h3>Live Stats</h3>
-      <p>Visualize your caffeine intake per hour, day or week. Built for feedback-lovers.</p>
+      <div class="feature-icon">📊</div>
+      <h3>Dopamine Stats</h3>
+      <p>Real-time caffeine graphs that hit just right. Track by hour, day, week or vibe.</p>
     </div>
     <div class="feature">
-      <div style="font-size: 32px;">🌍</div>
-      <h3>Global Map</h3>
-      <p>See who’s sipping coffee — and where — in real-time across the world map.</p>
+      <div class="feature-icon">🗺️</div>
+      <h3>Global Coffee Map</h3>
+      <p>See who's sipping what — and where — with live map logging from around the world.</p>
     </div>
     <div class="feature">
-      <div style="font-size: 32px;">🎯</div>
-      <h3>Instant Logging</h3>
-      <p>Tap, track and chill. No accounts, no nonsense — just your vibe and your cup.</p>
+      <div class="feature-icon">⚡</div>
+      <h3>One-Tap Logging</h3>
+      <p>No account needed. Tap, log, done. You're back to vibing.</p>
+    </div>
+    <div class="feature">
+      <div class="feature-icon">🏆</div>
+      <h3>XP & Level System</h3>
+      <p>Earn XP for every sip. Level up your routine. Unlock coffee-based greatness.</p>
     </div>
   </div>
 
@@ -218,7 +254,7 @@
     <p>© 2025 Caffy. All rights reserved. • <a href="#">Privacy Policy</a> • <a href="#">Terms</a></p>
   </footer>
 
-  <!-- JS -->
+  <!-- Scripts -->
   <script>
     // Lottie
     lottie.loadAnimation({
@@ -248,14 +284,31 @@
       activeIndex = (activeIndex + 1) % previews.length;
       previews[activeIndex].classList.add('active');
 
-      // 🎉 Confetti
-      confetti({
-        particleCount: 40,
-        spread: 60,
-        origin: { y: 0.3 },
-        scalar: 0.8
-      });
+      confetti({ particleCount: 40, spread: 60, origin: { y: 0.3 }, scalar: 0.8 });
     }, 4000);
+
+    // Floating Live Logs
+    const logsEl = document.getElementById('liveLogs');
+    const names = ['Guest', 'Lisa', 'Alex', 'Sophie', 'Noah'];
+    const drinks = ['Espresso', 'Latte', 'Cold Brew', 'Cappuccino', 'Americano'];
+    const places = [
+      'Berlin 🇩🇪', 'Amsterdam 🇳🇱', 'Paris 🇫🇷',
+      'Rome 🇮🇹', 'Tokyo 🇯🇵', 'London 🇬🇧',
+      'Madrid 🇪🇸', 'Copenhagen 🇩🇰', 'Oslo 🇳🇴'
+    ];
+
+    function addLiveLog() {
+      const log = document.createElement('div');
+      log.className = 'live-log';
+      const name = names[Math.floor(Math.random() * names.length)];
+      const drink = drinks[Math.floor(Math.random() * drinks.length)];
+      const place = places[Math.floor(Math.random() * places.length)];
+      log.textContent = `${name} logged a ${drink} in ${place}`;
+      logsEl.appendChild(log);
+      setTimeout(() => log.remove(), 5000);
+    }
+
+    setInterval(addLiveLog, 3500);
   </script>
 </body>
 </html>
