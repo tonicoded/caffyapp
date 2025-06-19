@@ -33,11 +33,11 @@
       animation: bgFlow 20s ease infinite;
       color: var(--text);
       font-family: 'Outfit', sans-serif;
+      text-align: center;
       display: flex;
       flex-direction: column;
       justify-content: space-between;
       align-items: center;
-      text-align: center;
       padding: 2vh 4vw;
     }
 
@@ -52,7 +52,7 @@
       height: 11vh;
       min-width: 60px;
       min-height: 60px;
-      margin-top: 2vh;
+      margin: 0 auto;
     }
 
     h1 {
@@ -62,19 +62,18 @@
     }
 
     p.subtitle {
-      font-size: 1.6vh;
+      font-size: 1.65vh;
       max-width: 90vw;
-      margin: 1vh auto 2vh;
+      margin: 0.8vh 0 1.6vh;
       opacity: 0.9;
       line-height: 1.4;
     }
 
     .phone-preview {
-      max-width: 20vh;
+      max-width: 24vh;
       width: 100%;
       position: relative;
-      margin: 1vh auto 1vh;
-      aspect-ratio: 9/16;
+      margin-bottom: 1vh;
     }
 
     .phone-preview img {
@@ -94,8 +93,8 @@
 
     .store-buttons {
       display: flex;
-      gap: 10px;
-      margin: 1vh 0 0;
+      gap: 12px;
+      margin: 1vh 0;
       flex-wrap: wrap;
       justify-content: center;
       transform: scale(0.95);
@@ -116,7 +115,7 @@
       font-size: 1.3vh;
       color: #9c7865;
       opacity: 0.8;
-      margin-bottom: 0.8vh;
+      margin-bottom: 0.5vh;
     }
 
     a {
@@ -124,26 +123,11 @@
       text-decoration: none;
     }
 
-    /* Responsiveness */
     @media (max-height: 700px) {
       h1 { font-size: 3.4vh; }
       p.subtitle { font-size: 1.5vh; }
-      #lottieLogo { width: 9vh; height: 9vh; margin-top: 1vh; }
-      .phone-preview { max-width: 18vh; }
-    }
-
-    @media (max-width: 500px) {
-      .store-buttons {
-        gap: 8px;
-        margin-top: 0.6vh;
-      }
-      p.subtitle {
-        font-size: 1.4vh;
-        margin-bottom: 1.4vh;
-      }
-      .phone-preview {
-        max-width: 17vh;
-      }
+      .phone-preview { max-width: 20vh; }
+      #lottieLogo { width: 9vh; height: 9vh; }
     }
 
     @media (orientation: landscape) and (max-height: 500px) {
@@ -152,33 +136,21 @@
         justify-content: space-around;
         align-items: center;
         flex-wrap: wrap;
-        padding: 2vw;
       }
-
-      .store-buttons, footer {
-        display: none;
-      }
-
-      #lottieLogo {
-        margin-top: 0;
-      }
-
-      .phone-preview {
-        margin-bottom: 0;
-      }
+      .store-buttons, footer { display: none; }
     }
   </style>
 </head>
 
 <body>
-  <!-- Hero -->
+  <!-- Hero Section -->
   <div>
     <div id="lottieLogo"></div>
     <h1>Caffy</h1>
     <p class="subtitle">The dopamine-driven caffeine tracker ☕<br>Track your coffee. Explore the map. Own your vibe.</p>
   </div>
 
-  <!-- Preview Carousel -->
+  <!-- Preview -->
   <div class="phone-preview" id="previewContainer">
     <img src="preview1.png" class="active" alt="Preview">
     <img src="preview2.png" alt="Preview">
@@ -187,7 +159,7 @@
     <img src="preview5.png" alt="Preview">
   </div>
 
-  <!-- Download Buttons -->
+  <!-- Store buttons -->
   <div class="store-buttons">
     <img src="https://developer.apple.com/assets/elements/badges/download-on-the-app-store.svg" alt="App Store">
     <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/7/78/Google_Play_Store_badge_EN.svg/512px-Google_Play_Store_badge_EN.svg.png" alt="Google Play">
@@ -200,6 +172,7 @@
 
   <!-- Scripts -->
   <script>
+    // Lottie animatie
     lottie.loadAnimation({
       container: document.getElementById('lottieLogo'),
       renderer: 'svg',
@@ -208,7 +181,7 @@
       path: 'logo.json' // Zorg dat dit correct staat
     });
 
-    // Carousel met confetti
+    // Preview-carousel
     const previews = document.querySelectorAll('.phone-preview img');
     let activeIndex = 0;
 
@@ -217,12 +190,7 @@
       activeIndex = (activeIndex + 1) % previews.length;
       previews[activeIndex].classList.add('active');
 
-      confetti({
-        particleCount: 20,
-        spread: 40,
-        origin: { y: 0.3 },
-        scalar: 0.5
-      });
+      confetti({ particleCount: 25, spread: 45, origin: { y: 0.3 }, scalar: 0.6 });
     }, 4000);
   </script>
 </body>
