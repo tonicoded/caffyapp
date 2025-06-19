@@ -38,7 +38,7 @@
       flex-direction: column;
       justify-content: space-between;
       align-items: center;
-      padding: 1vh 3vw;
+      padding: 0.5vh 3vw;
     }
 
     @keyframes bgFlow {
@@ -47,38 +47,44 @@
       100% { background-position: 0% 50%; }
     }
 
+    #lottieLogoWrapper {
+      display: flex;
+      justify-content: center;
+      width: 100%;
+    }
+
     #lottieLogo {
-      width: 9vh;
-      height: 9vh;
-      min-width: 60px;
-      min-height: 60px;
-      margin-bottom: 0.5vh;
+      width: 8.5vh;
+      height: 8.5vh;
+      min-width: 50px;
+      min-height: 50px;
+      margin-bottom: 0.2vh;
     }
 
     h1 {
       font-family: 'Bree Serif', serif;
-      font-size: 3.4vh;
-      margin-bottom: 0.5vh;
+      font-size: 3.2vh;
+      margin-bottom: 0.3vh;
     }
 
     p.subtitle {
-      font-size: 1.5vh;
+      font-size: 1.45vh;
       max-width: 88vw;
-      margin-bottom: 1.4vh;
+      margin-bottom: 1.2vh;
       opacity: 0.9;
       line-height: 1.4;
     }
 
     .phone-preview {
-      max-width: 20vh;
+      max-width: 17vh;
       width: 100%;
       position: relative;
-      margin-bottom: 0.8vh;
+      margin-bottom: 0.5vh;
     }
 
     .phone-preview img {
       width: 100%;
-      border-radius: 1.8vh;
+      border-radius: 1.6vh;
       position: absolute;
       opacity: 0;
       transform: scale(0.95);
@@ -93,16 +99,16 @@
 
     .store-buttons {
       display: flex;
-      gap: 10px;
-      margin: 0.8vh 0;
+      gap: 8px;
+      margin: 0.6vh 0;
       flex-wrap: wrap;
       justify-content: center;
-      transform: scale(0.92);
+      transform: scale(0.9);
     }
 
     .store-buttons img {
-      height: 4.4vh;
-      max-height: 42px;
+      height: 4vh;
+      max-height: 40px;
       cursor: pointer;
       transition: transform 0.2s ease;
     }
@@ -112,10 +118,10 @@
     }
 
     footer {
-      font-size: 1.2vh;
+      font-size: 1.1vh;
       color: #9c7865;
       opacity: 0.75;
-      margin-bottom: 0.4vh;
+      margin-bottom: 0.3vh;
     }
 
     a {
@@ -124,11 +130,11 @@
     }
 
     @media (max-height: 700px) {
-      h1 { font-size: 3vh; }
-      p.subtitle { font-size: 1.4vh; }
-      .phone-preview { max-width: 18vh; }
-      #lottieLogo { width: 8vh; height: 8vh; }
-      .store-buttons img { height: 4vh; }
+      h1 { font-size: 2.8vh; }
+      p.subtitle { font-size: 1.3vh; }
+      .phone-preview { max-width: 16vh; }
+      #lottieLogo { width: 7vh; height: 7vh; }
+      .store-buttons img { height: 3.8vh; }
     }
 
     @media (orientation: landscape) and (max-height: 500px) {
@@ -146,7 +152,9 @@
 <body>
   <!-- Hero Section -->
   <div>
-    <div id="lottieLogo"></div>
+    <div id="lottieLogoWrapper">
+      <div id="lottieLogo"></div>
+    </div>
     <h1>Caffy</h1>
     <p class="subtitle">The dopamine-driven caffeine tracker ☕<br>Track your coffee. Explore the map. Own your vibe.</p>
   </div>
@@ -178,7 +186,7 @@
       renderer: 'svg',
       loop: true,
       autoplay: true,
-      path: 'logo.json' // Zorg dat deze correct staat
+      path: 'logo.json' // Zorg dat dit correct staat
     });
 
     const previews = document.querySelectorAll('.phone-preview img');
