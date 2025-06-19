@@ -25,15 +25,19 @@
     }
 
     html, body {
-      min-height: 100%;
+      height: 100vh;
+      overflow: hidden;
       background: linear-gradient(270deg, var(--bg1), var(--bg2), var(--bg1));
       background-size: 600% 600%;
       animation: bgShift 16s ease infinite;
       color: var(--text);
       font-family: 'Outfit', sans-serif;
       text-align: center;
-      padding: 40px 20px;
-      overflow-x: hidden;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
     }
 
     @keyframes bgShift {
@@ -43,48 +47,38 @@
     }
 
     #lottieLogo {
-      width: 200px;
-      height: 200px;
-      margin: 0 auto 20px;
+      width: 120px;
+      height: 120px;
+      margin-bottom: 10px;
     }
 
     h1 {
       font-family: 'Bree Serif', serif;
-      font-size: 48px;
-      margin-bottom: 10px;
+      font-size: 36px;
+      margin-bottom: 5px;
     }
 
     p.subtitle {
-      font-size: 18px;
-      max-width: 680px;
-      margin: 0 auto 30px;
+      font-size: 15px;
+      max-width: 600px;
+      margin-bottom: 15px;
       opacity: 0.9;
-      line-height: 1.5;
-    }
-
-  
-
-    @keyframes pulse {
-      0%, 100% { transform: scale(1); opacity: 1; }
-      50% { transform: scale(1.05); opacity: 0.8; }
+      line-height: 1.4;
     }
 
     .phone-preview {
-      max-width: 380px;
+      max-width: 260px;
       width: 100%;
-      margin: 0 auto 40px;
       position: relative;
     }
 
     .phone-preview img {
       width: 100%;
-      border-radius: 30px;
+      border-radius: 24px;
+      position: absolute;
       opacity: 0;
       transform: scale(0.95);
       transition: opacity 0.4s ease, transform 0.4s ease;
-      position: absolute;
-      top: 0;
-      left: 0;
     }
 
     .phone-preview img.active {
@@ -95,94 +89,47 @@
 
     .store-buttons {
       display: flex;
-      justify-content: center;
-      gap: 20px;
+      gap: 16px;
+      margin-top: 20px;
       flex-wrap: wrap;
-      margin: 60px 0;
+      justify-content: center;
     }
 
     .store-buttons img {
-      height: 52px;
-      transition: transform 0.2s ease;
+      height: 44px;
       cursor: pointer;
+      transition: transform 0.2s ease;
     }
 
     .store-buttons img:hover {
-      transform: scale(1.07);
-    }
-
-    .features {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-      gap: 30px;
-      max-width: 1000px;
-      margin: 60px auto;
-      padding: 0 10px;
-    }
-
-    .feature {
-      background: #f2e4da;
-      padding: 30px;
-      border-radius: 20px;
-      box-shadow: 0 10px 20px rgba(0,0,0,0.05);
-      transition: transform 0.3s ease, box-shadow 0.3s ease;
-    }
-
-    .feature:hover {
-      transform: translateY(-6px);
-      box-shadow: 0 12px 24px rgba(0,0,0,0.1);
-    }
-
-    .feature-icon {
-      font-size: 36px;
-      margin-bottom: 10px;
-    }
-
-    .feature h3 {
-      font-size: 22px;
-      margin-bottom: 10px;
-    }
-
-    .feature p {
-      font-size: 15px;
-      opacity: 0.85;
-    }
-
-
-
-    @keyframes fadeInOut {
-      0% { opacity: 0; transform: translateY(-10px); }
-      10%, 90% { opacity: 1; transform: translateY(0); }
-      100% { opacity: 0; transform: translateY(10px); }
+      transform: scale(1.05);
     }
 
     footer {
-      font-size: 12px;
+      font-size: 11px;
       color: #9c7865;
-      margin-top: 60px;
+      margin-top: 15px;
+      opacity: 0.8;
     }
 
     a {
       color: #9c7865;
-      text-decoration: underline;
+      text-decoration: none;
     }
 
-    @media (max-width: 500px) {
-      h1 { font-size: 36px; }
-      p.subtitle { font-size: 16px; }
-      .phone-preview img { border-radius: 24px; }
+    @media (max-height: 700px) {
+      h1 { font-size: 28px; }
+      #lottieLogo { width: 90px; height: 90px; }
+      .phone-preview { max-width: 200px; }
     }
   </style>
 </head>
 
 <body>
-
-
   <!-- Hero -->
   <div id="lottieLogo"></div>
   <h1>Caffy</h1>
   <p class="subtitle">The dopamine-driven caffeine tracker ☕<br>Track your coffee. Explore the map. Own your vibe.</p>
-
 
   <!-- Preview carousel -->
   <div class="phone-preview" id="previewContainer">
@@ -199,11 +146,9 @@
     <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/7/78/Google_Play_Store_badge_EN.svg/512px-Google_Play_Store_badge_EN.svg.png" alt="Google Play">
   </div>
 
-
-
   <!-- Footer -->
   <footer>
-    <p>© 2025 Caffy. All rights reserved. • <a href="#">Privacy Policy</a> • <a href="#">Terms</a></p>
+    <p>© 2025 Caffy • <a href="#">Privacy</a> • <a href="#">Terms</a></p>
   </footer>
 
   <!-- Scripts -->
@@ -217,8 +162,6 @@
       path: 'logo.json'
     });
 
-
-
     // Preview carousel
     const previews = document.querySelectorAll('.phone-preview img');
     let activeIndex = 0;
@@ -228,31 +171,9 @@
       activeIndex = (activeIndex + 1) % previews.length;
       previews[activeIndex].classList.add('active');
 
-      confetti({ particleCount: 40, spread: 60, origin: { y: 0.3 }, scalar: 0.8 });
+      // Confetti for fun 🎉
+      confetti({ particleCount: 30, spread: 60, origin: { y: 0.3 }, scalar: 0.7 });
     }, 4000);
-
-    // Floating Live Logs
-    const logsEl = document.getElementById('liveLogs');
-    const names = ['Guest', 'Lisa', 'Alex', 'Sophie', 'Noah'];
-    const drinks = ['Espresso', 'Latte', 'Cold Brew', 'Cappuccino', 'Americano'];
-    const places = [
-      'Berlin 🇩🇪', 'Amsterdam 🇳🇱', 'Paris 🇫🇷',
-      'Rome 🇮🇹', 'Tokyo 🇯🇵', 'London 🇬🇧',
-      'Madrid 🇪🇸', 'Copenhagen 🇩🇰', 'Oslo 🇳🇴'
-    ];
-
-    function addLiveLog() {
-      const log = document.createElement('div');
-      log.className = 'live-log';
-      const name = names[Math.floor(Math.random() * names.length)];
-      const drink = drinks[Math.floor(Math.random() * drinks.length)];
-      const place = places[Math.floor(Math.random() * places.length)];
-      log.textContent = `${name} logged a ${drink} in ${place}`;
-      logsEl.appendChild(log);
-      setTimeout(() => log.remove(), 5000);
-    }
-
-    setInterval(addLiveLog, 3500);
   </script>
 </body>
 </html>
