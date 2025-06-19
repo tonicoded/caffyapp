@@ -35,9 +35,9 @@
       text-align: center;
       display: flex;
       flex-direction: column;
+      justify-content: space-between;
       align-items: center;
-      justify-content: center;
-      padding: 20px;
+      padding: 2vh 4vw;
     }
 
     @keyframes bgShift {
@@ -47,34 +47,36 @@
     }
 
     #lottieLogo {
-      width: 120px;
-      height: 120px;
-      margin-bottom: 10px;
+      width: 12vh;
+      height: 12vh;
+      min-width: 70px;
+      min-height: 70px;
     }
 
     h1 {
       font-family: 'Bree Serif', serif;
-      font-size: 36px;
-      margin-bottom: 5px;
+      font-size: 4vh;
+      margin-top: 1vh;
     }
 
     p.subtitle {
-      font-size: 15px;
-      max-width: 600px;
-      margin-bottom: 15px;
+      font-size: 1.7vh;
+      max-width: 90vw;
+      margin: 0.5vh 0 1.5vh;
       opacity: 0.9;
       line-height: 1.4;
     }
 
     .phone-preview {
-      max-width: 260px;
+      max-width: 26vh;
       width: 100%;
       position: relative;
+      margin-bottom: 1vh;
     }
 
     .phone-preview img {
       width: 100%;
-      border-radius: 24px;
+      border-radius: 2vh;
       position: absolute;
       opacity: 0;
       transform: scale(0.95);
@@ -89,14 +91,16 @@
 
     .store-buttons {
       display: flex;
-      gap: 16px;
-      margin-top: 20px;
+      gap: 12px;
+      margin: 1vh 0;
       flex-wrap: wrap;
       justify-content: center;
+      transform: scale(0.95);
     }
 
     .store-buttons img {
-      height: 44px;
+      height: 4.8vh;
+      max-height: 48px;
       cursor: pointer;
       transition: transform 0.2s ease;
     }
@@ -106,10 +110,10 @@
     }
 
     footer {
-      font-size: 11px;
+      font-size: 1.3vh;
       color: #9c7865;
-      margin-top: 15px;
       opacity: 0.8;
+      margin-bottom: 0.5vh;
     }
 
     a {
@@ -117,21 +121,34 @@
       text-decoration: none;
     }
 
-    @media (max-height: 700px) {
-      h1 { font-size: 28px; }
-      #lottieLogo { width: 90px; height: 90px; }
-      .phone-preview { max-width: 200px; }
+    @media (max-height: 600px) {
+      h1 { font-size: 3.2vh; }
+      p.subtitle { font-size: 1.5vh; }
+      .phone-preview { max-width: 20vh; }
+      #lottieLogo { width: 10vh; height: 10vh; }
+    }
+
+    @media (orientation: landscape) and (max-height: 500px) {
+      html, body {
+        flex-direction: row;
+        justify-content: space-around;
+        align-items: center;
+        flex-wrap: wrap;
+      }
+      .store-buttons, footer { display: none; }
     }
   </style>
 </head>
 
 <body>
-  <!-- Hero -->
-  <div id="lottieLogo"></div>
-  <h1>Caffy</h1>
-  <p class="subtitle">The dopamine-driven caffeine tracker ☕<br>Track your coffee. Explore the map. Own your vibe.</p>
+  <!-- Top -->
+  <div>
+    <div id="lottieLogo"></div>
+    <h1>Caffy</h1>
+    <p class="subtitle">The dopamine-driven caffeine tracker ☕<br>Track your coffee. Explore the map. Own your vibe.</p>
+  </div>
 
-  <!-- Preview carousel -->
+  <!-- Preview -->
   <div class="phone-preview" id="previewContainer">
     <img src="preview1.png" class="active" alt="Preview">
     <img src="preview2.png" alt="Preview">
@@ -140,7 +157,7 @@
     <img src="preview5.png" alt="Preview">
   </div>
 
-  <!-- Store buttons -->
+  <!-- Store -->
   <div class="store-buttons">
     <img src="https://developer.apple.com/assets/elements/badges/download-on-the-app-store.svg" alt="App Store">
     <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/7/78/Google_Play_Store_badge_EN.svg/512px-Google_Play_Store_badge_EN.svg.png" alt="Google Play">
@@ -171,8 +188,8 @@
       activeIndex = (activeIndex + 1) % previews.length;
       previews[activeIndex].classList.add('active');
 
-      // Confetti for fun 🎉
-      confetti({ particleCount: 30, spread: 60, origin: { y: 0.3 }, scalar: 0.7 });
+      // Confetti for subtle dopamine boost
+      confetti({ particleCount: 24, spread: 50, origin: { y: 0.25 }, scalar: 0.6 });
     }, 4000);
   </script>
 </body>
