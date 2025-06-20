@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
   <title>Caffy ☕</title>
 
   <!-- Fonts & Libs -->
@@ -17,6 +17,7 @@
       --bg3: #fff0e5;
       --text: #3e2b1f;
       --accent: #a47148;
+      --vh: 1vh;
     }
 
     * {
@@ -26,8 +27,9 @@
     }
 
     html, body {
-      height: 100%;
-      overflow: hidden;
+      height: calc(var(--vh, 1vh) * 100);
+      overflow-x: hidden;
+      overflow-y: auto;
       background: linear-gradient(-45deg, var(--bg1), var(--bg2), var(--bg3));
       background-size: 300% 300%;
       animation: bgFlow 20s ease infinite;
@@ -53,19 +55,19 @@
       min-width: 60px;
       min-height: 60px;
       margin: 0 auto;
-      margin-top: 2vh; /* voeg dit toe */
+      margin-top: 2vh;
     }
 
     h1 {
       font-family: 'Bree Serif', serif;
       font-size: 4vh;
-      margin-top: 0.2vh; /* van 1vh naar 0.5vh */
+      margin-top: 0.2vh;
     }
 
     p.subtitle {
       font-size: 1.65vh;
       max-width: 90vw;
-      margin: 0.5vh 0 0.5vh; /* iets strakker */
+      margin: 0.5vh 0 0.5vh;
       opacity: 0.9;
       line-height: 1.4;
     }
@@ -74,7 +76,7 @@
       max-width: 24vh;
       width: 100%;
       position: relative;
-      margin-bottom: 0.2vh; /* van 1vh naar 0.5vh */
+      margin-bottom: 0.2vh;
     }
 
     .phone-preview img {
@@ -95,7 +97,7 @@
     .store-buttons {
       display: flex;
       gap: 12px;
-      margin: 0.2vh 0; /* van 1vh naar 0.5vh */
+      margin: 0.2vh 0;
       flex-wrap: wrap;
       justify-content: center;
       transform: scale(0.95);
@@ -116,18 +118,19 @@
       font-size: 1.3vh;
       color: #9c7865;
       opacity: 0.8;
-      margin-bottom: 0.2vh; /* minder witruimte onderaan */
+      margin-bottom: 0.5vh;
     }
 
     a {
       color: #9c7865;
       text-decoration: none;
     }
-@media screen and (max-height: 740px) {
-  #lottieLogo { margin-top: 3vh; }
-  h1 { font-size: 3.2vh; }
-  p.subtitle { font-size: 1.4vh; }
-}
+
+    @media screen and (max-height: 740px) {
+      #lottieLogo { margin-top: 3vh; }
+      h1 { font-size: 3.2vh; }
+      p.subtitle { font-size: 1.4vh; }
+    }
 
     @media (max-height: 700px) {
       h1 { font-size: 5vh; }
@@ -178,6 +181,14 @@
 
   <!-- Scripts -->
   <script>
+    // Fix voor vh op iPhones (dynamic island etc.)
+    const setVH = () => {
+      document.documentElement.style.setProperty('--vh', window.innerHeight * 0.01 + 'px');
+    };
+    window.addEventListener('resize', setVH);
+    window.addEventListener('orientationchange', setVH);
+    setVH();
+
     // Lottie animatie
     lottie.loadAnimation({
       container: document.getElementById('lottieLogo'),
