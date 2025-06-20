@@ -53,18 +53,19 @@
       min-width: 60px;
       min-height: 60px;
       margin: 0 auto;
+      margin-top: 2vh; /* voeg dit toe */
     }
 
     h1 {
       font-family: 'Bree Serif', serif;
       font-size: 4vh;
-      margin-top: 1vh;
+      margin-top: 0.5vh; /* van 1vh naar 0.5vh */
     }
 
     p.subtitle {
       font-size: 1.65vh;
       max-width: 90vw;
-      margin: 0.8vh 0 1.6vh;
+      margin: 0.5vh 0 1.2vh; /* iets strakker */
       opacity: 0.9;
       line-height: 1.4;
     }
@@ -73,7 +74,7 @@
       max-width: 24vh;
       width: 100%;
       position: relative;
-      margin-bottom: 1vh;
+      margin-bottom: 0.5vh; /* van 1vh naar 0.5vh */
     }
 
     .phone-preview img {
@@ -94,7 +95,7 @@
     .store-buttons {
       display: flex;
       gap: 12px;
-      margin: 1vh 0;
+      margin: 0.5vh 0; /* van 1vh naar 0.5vh */
       flex-wrap: wrap;
       justify-content: center;
       transform: scale(0.95);
@@ -115,13 +116,18 @@
       font-size: 1.3vh;
       color: #9c7865;
       opacity: 0.8;
-      margin-bottom: 0.5vh;
+      margin-bottom: 0.2vh; /* minder witruimte onderaan */
     }
 
     a {
       color: #9c7865;
       text-decoration: none;
     }
+@media screen and (max-height: 740px) {
+  #lottieLogo { margin-top: 3vh; }
+  h1 { font-size: 3.2vh; }
+  p.subtitle { font-size: 1.4vh; }
+}
 
     @media (max-height: 700px) {
       h1 { font-size: 3.4vh; }
