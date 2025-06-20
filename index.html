@@ -72,21 +72,34 @@
       line-height: 1.4;
     }
 
-    .phone-preview {
-      max-width: 24vh;
-      width: 100%;
-      position: relative;
-      margin-bottom: 0.2vh;
-    }
+.phone-preview {
+  max-width: 24vh;
+  width: 100%;
+  position: relative;
+  margin-bottom: 0.2vh;
+  height: auto; /* fix die ervoor zorgt dat scroll niet glitcht */
+  aspect-ratio: 9 / 19.5; /* zorgt voor stabiele hoogte gebaseerd op iPhone-vorm */
+}
 
-    .phone-preview img {
-      width: 100%;
-      border-radius: 2vh;
-      position: absolute;
-      opacity: 0;
-      transform: scale(0.95);
-      transition: opacity 0.4s ease, transform 0.4s ease;
-    }
+.phone-preview img {
+  width: 100%;
+  border-radius: 2vh;
+  position: absolute;
+  opacity: 0;
+  transform: scale(0.95);
+  transition: opacity 0.4s ease, transform 0.4s ease;
+  pointer-events: none;
+  display: none; /* <— voeg toe */
+}
+
+.phone-preview img.active {
+  opacity: 1;
+  transform: scale(1);
+  position: relative;
+  display: block; /* <— voeg toe */
+  pointer-events: auto;
+}
+
 
     .phone-preview img.active {
       opacity: 1;
